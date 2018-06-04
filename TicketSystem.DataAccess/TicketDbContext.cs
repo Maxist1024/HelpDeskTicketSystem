@@ -18,6 +18,7 @@ namespace TicketSystem.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new TicketConfig());
+            modelBuilder.Configurations.Add(new UserConfig());
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             base.OnModelCreating(modelBuilder);

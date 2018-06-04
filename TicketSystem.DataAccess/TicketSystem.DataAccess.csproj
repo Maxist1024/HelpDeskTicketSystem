@@ -53,6 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201806042005590_CodeFirst1.cs" />
+    <Compile Include="Migrations\201806042005590_CodeFirst1.Designer.cs">
+      <DependentUpon>201806042005590_CodeFirst1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TicketDbContext.cs" />
     <Compile Include="TicketDbInitializer.cs" />
@@ -66,6 +71,11 @@
       <Project>{8AE327FF-C244-47BD-B53A-8E6CE32E7CB5}</Project>
       <Name>TicketSystem.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806042005590_CodeFirst1.resx">
+      <DependentUpon>201806042005590_CodeFirst1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
