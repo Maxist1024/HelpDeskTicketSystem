@@ -1,0 +1,28 @@
+﻿@model TicketSystem.Model.Ticket
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+
+@using (@Html.BeginForm("Add", "Ticket", FormMethod.Post, new {}))
+{
+    
+    //@Html.AntiForgeryToken() 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TypeOfTicket)
+        @Html.EnumDropDownListFor(m => m.TypeOfTicket, new { @class = "form-control"})
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control"})
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Zatwierdź</button>
+}
