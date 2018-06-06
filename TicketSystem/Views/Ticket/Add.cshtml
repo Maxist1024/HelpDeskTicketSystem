@@ -1,28 +1,48 @@
-﻿@model TicketSystem.Model.Ticket
+﻿@model TicketSystem.Models.TicketViewModel
 @{
     ViewBag.Title = "Add";
 }
 
-<h2>Add</h2>
+<h2>Zgłoszenie</h2>
 
-@using (@Html.BeginForm("Add", "Ticket", FormMethod.Post, new {}))
+@using (@Html.BeginForm("Add", "Ticket", FormMethod.Post, new { @class = "ticket-form" }))
 {
-    
-    //@Html.AntiForgeryToken() 
+
+    //@Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.LabelFor(m => m.Title)
+        @Html.Label("Tytuł")
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.Title)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.TypeOfTicket)
-        @Html.EnumDropDownListFor(m => m.TypeOfTicket, new { @class = "form-control"})
+        @Html.Label("Rodzaj zgłoszenia")
+        @Html.EnumDropDownListFor(m => m.TypeOfTicket, new { @class = "form-control" })
+        @*@Html.ValidationMessageFor(m => m.TypeOfTicket)*@
     </div>
+
+    @*<div class="form-group">
+        <!-- moja poropozycja aby dodac takie pole w bazie danych -->
+        @Html.Label("Grupa helpdesku")
+        
+        <!--na sztywno dla demonstracji-->
+        @Html.DropDownList("FooBarDropDown", new List<SelectListItem>
+        {
+            new SelectListItem{ Text="Telefuny", Value = "1" },
+            new SelectListItem{ Text="Drukarki", Value = "2" },
+            new SelectListItem{ Text="Hardware", Value = "3" },
+            new SelectListItem{ Text="Software", Value = "3" },
+        }, new { @class="form-control"} ) 
+       
+    </div>*@
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Description)
-        @Html.TextAreaFor(m => m.Description, new { @class = "form-control"})
+        @Html.Label("Opis problemu")
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", style = "height:200px" })
+        @Html.ValidationMessageFor(m => m.Description)
     </div>
-
-    <button type="submit" class="btn btn-primary btn-lg">Zatwierdź</button>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-sm">Zatwierdź</button>
+    </div>
+    
 }

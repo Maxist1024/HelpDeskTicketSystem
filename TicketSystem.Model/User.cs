@@ -8,9 +8,9 @@ namespace TicketSystem.Model
 {
     public class User : IdentityUser
     {
-        public int TicketId { get; set; }
+        //public int TicketId { get; set; }
 
-        public virtual Ticket Ticket { get; set; }
+        //public virtual Ticket Ticket { get; set; }
 
         public TypesOfTicket TypeOfTicket { get; set; }
 
@@ -26,8 +26,8 @@ namespace TicketSystem.Model
     {
         public UserConfig()
         {
-            HasOptional(t => t.Ticket)
-                .WithRequired(u => u.User);
+            //HasOptional(t => t.Ticket)
+            //    .WithRequired(u => u.User);
         }
     }
 }

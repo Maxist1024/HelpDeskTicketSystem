@@ -57,6 +57,14 @@
     <Compile Include="Migrations\201806042005590_CodeFirst1.Designer.cs">
       <DependentUpon>201806042005590_CodeFirst1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806061952514_UserIdAsString.cs" />
+    <Compile Include="Migrations\201806061952514_UserIdAsString.Designer.cs">
+      <DependentUpon>201806061952514_UserIdAsString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806061959135_UsuniecieWlasciwosciTicketITypeOfTicketZUsera.cs" />
+    <Compile Include="Migrations\201806061959135_UsuniecieWlasciwosciTicketITypeOfTicketZUsera.Designer.cs">
+      <DependentUpon>201806061959135_UsuniecieWlasciwosciTicketITypeOfTicketZUsera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TicketDbContext.cs" />
@@ -75,6 +83,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806042005590_CodeFirst1.resx">
       <DependentUpon>201806042005590_CodeFirst1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806061952514_UserIdAsString.resx">
+      <DependentUpon>201806061952514_UserIdAsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806061959135_UsuniecieWlasciwosciTicketITypeOfTicketZUsera.resx">
+      <DependentUpon>201806061959135_UsuniecieWlasciwosciTicketITypeOfTicketZUsera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
