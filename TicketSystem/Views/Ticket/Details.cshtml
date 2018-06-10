@@ -1,0 +1,50 @@
+﻿@model List<TicketSystem.Model.Ticket>
+@{
+    ViewBag.Title = "Details";
+    int idx = 1;//zmiena do numerowania wierszy w tabeli
+}
+
+
+<h2>Moje zgłoszenia</h2>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        Nie posiadasz żadnych zgłoszeń
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Data utworzenia</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var ticket in Model)
+            {
+
+
+                <tr>
+                    <th scope="row">@idx</th>
+                    <td>@ticket.Title</td>
+                    <td style="word-wrap: break-word; max-width: 200px;">@ticket.Description</td>
+                    <td>@ticket.TypeOfTicket</td>
+                    <td>@ticket.CreationTime</td>
+                    <td>@ticket.StatusOfTicket</td>
+                </tr>
+                idx++;
+            }
+
+            </tbody>
+        </table>
+    </div>
+}
