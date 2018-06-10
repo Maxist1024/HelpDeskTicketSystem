@@ -65,11 +65,6 @@ namespace TicketSystem.Models
     public class RegisterViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej następującą liczbę znaków: {2}.", MinimumLength = 6)]
-        [Display(Name = "Nick")]
-        public string Nickname { get; set; }
-
-        [Required]
         [EmailAddress]
         [Display(Name = "Adres e-mail")]
         public string Email { get; set; }

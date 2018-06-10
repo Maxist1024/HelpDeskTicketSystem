@@ -32,7 +32,7 @@ namespace TicketSystem
                 role.Name = "Admin";
                 roleManager.Create(role);
 
-                var user = new User { UserName = "admin", Email = "admin@gmail.com" };
+                var user = new User { UserName = "admin@gmail.com", Email = "admin@gmail.com" };
 
                 string userPWD = "Admin123";
 
