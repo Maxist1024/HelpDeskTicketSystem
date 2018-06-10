@@ -13,7 +13,5 @@ namespace TicketSystem.Models
         public string Description { get; set; }
 
         public TypesOfTicket TypeOfTicket { get; set; }
-
-
     }
 }

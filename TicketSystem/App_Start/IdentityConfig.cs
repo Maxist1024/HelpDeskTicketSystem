@@ -4,29 +4,45 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TicketSystem.DataAccess;
 using TicketSystem.Model;
-using TicketSystem.Models;
 
 namespace TicketSystem
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             // Dołącz tutaj usługę poczty e-mail, aby wysłać wiadomość e-mail.
-            return Task.FromResult(0);
+            CreateSendItem(message);
         }
-    }
 
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
+        public void CreateSendItem(IdentityMessage message)
         {
-            // Dołącz tutaj usługę wiadomości SMS, aby wysłać wiadomość SMS.
-            return Task.FromResult(0);
+            SmtpClient smtpClient = new SmtpClient("poczta.o2.pl", 587); //tworzymy klienta smtp
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.EnableSsl = true;
+            MailMessage mail = new MailMessage();  //tworzymy wiadomość
+            MailAddress from = new MailAddress("dlaisk@o2.pl", "HelpDeskTicketSystem");//adres nadawcy i nazwa nadawcy
+
+            mail.From = from;
+            mail.To.Add(message.Destination);//adres odbiorcy
+            mail.Subject = message.Subject;//temat wiadomości
+            mail.Body = message.Body; //treść wiadomości
+
+            smtpClient.Credentials = new System.Net.NetworkCredential("dlaisk@o2.pl", "dlaisk123");//nazwa nadawcy i hasło
+
+            try
+            {
+                smtpClient.Send(mail);//nazwa odbiorcy, wysyłamy wiadomość
+            }
+            catch (SmtpException ex)
+            {
+                throw new ApplicationException("Klient SMTP wywołał wyjątek. Sprawdź połączenie z internetem." + ex.Message);
+            }
         }
     }
 
@@ -38,7 +54,7 @@ namespace TicketSystem
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<User>(context.Get<TicketDbContext>()));
             // Konfiguruj logikę weryfikacji nazw użytkowników
@@ -69,17 +85,17 @@ namespace TicketSystem
             //{
             //    MessageFormat = "Twój kod zabezpieczający: {0}"
             //});
-            //manager.RegisterTwoFactorProvider("Kod — e-mail", new EmailTokenProvider<ApplicationUser>
-            //{
-            //    Subject = "Kod zabezpieczeń",
-            //    BodyFormat = "Twój kod zabezpieczający: {0}"
-            //});
-            //manager.EmailService = new EmailService();
+            manager.RegisterTwoFactorProvider("Kod — e-mail", new EmailTokenProvider<User>
+            {
+                Subject = "Kod zabezpieczeń",
+                BodyFormat = "Twój kod zabezpieczający: {0}"
+            });
+            manager.EmailService = new EmailService();
             //manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
