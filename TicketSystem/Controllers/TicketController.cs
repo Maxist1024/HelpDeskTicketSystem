@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using TicketSystem.DataAccess;
 using TicketSystem.Model;
@@ -19,7 +20,7 @@ namespace TicketSystem.Controllers
 
 
         // GET: Zwaraca formularz do wypełnienia zgłoszenia
-        // [Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult Add()
         {
@@ -27,7 +28,7 @@ namespace TicketSystem.Controllers
         }
 
         [HttpPost]
-        // [Authorize]
+        [Authorize]
         public ActionResult Add(TicketViewModel ticketForm)
         {
             if (!ModelState.IsValid)
@@ -36,9 +37,7 @@ namespace TicketSystem.Controllers
             var userId = User.Identity.GetUserId();
             var ticketToDb = new Ticket
             {
-                //TicketId = 3,
                 UserId = userId,
-
                 Title = ticketForm.Title,
                 Description = ticketForm.Description,
                 TypeOfTicket = ticketForm.TypeOfTicket,
@@ -50,6 +49,21 @@ namespace TicketSystem.Controllers
             _context.Tickets.Add(ticketToDb);
             _context.SaveChanges();
             return View();
+        }
+
+        [Authorize]
+        public ActionResult Details()
+        {
+            var userId = User.Identity.GetUserId();
+            var userTickets = _context
+                .Tickets
+                .Where(u => u.UserId == userId)
+                .OrderByDescending(x => x.CreationTime)
+                .ToList();
+
+
+
+            return View(userTickets);
         }
     }
 }
