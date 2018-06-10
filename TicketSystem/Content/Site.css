@@ -24,6 +24,9 @@ textarea {
     resize: none;/*added by PG*/
 }
 
+.jumbotron {
+    text-align: center;
+}
 
 /*
     bootstrap style overrides
