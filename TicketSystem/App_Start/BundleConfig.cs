@@ -25,10 +25,7 @@ namespace TicketSystem
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            //plugin do zaawansowanej tabeli
-            bundles.Add(new StyleBundle("~/bundles/datatables").Include(
-                "~/Content/datatables.min.css",
-                "~/Scripts/datatables.min.js"));
+
         }
     }
 }

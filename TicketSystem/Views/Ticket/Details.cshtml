@@ -1,4 +1,5 @@
-﻿@model List<TicketSystem.Model.Ticket>
+﻿@using TicketSystem.Model
+@model List<TicketSystem.Model.Ticket>
 @{
     ViewBag.Title = "Details";
     int idx = 1;//zmiena do numerowania wierszy w tabeli
@@ -39,7 +40,24 @@ else
                     <td style="word-wrap: break-word; max-width: 200px;">@ticket.Description</td>
                     <td>@ticket.TypeOfTicket</td>
                     <td>@ticket.CreationTime</td>
-                    <td>@ticket.StatusOfTicket</td>
+                    <td>
+                        
+                            @switch (ticket.StatusOfTicket)
+                            {
+                                case StatusesOfTicket.Zalozony:
+                                    <button type="button" class="btn btn-danger">@ticket.StatusOfTicket</button>
+                                    break;
+
+                                case StatusesOfTicket.W_trakcie:
+                                    <button type="button" class="btn btn-warning">@ticket.StatusOfTicket</button>
+                                    break;
+
+                                case StatusesOfTicket.Zrobiony:
+                                    <button type="button" class="btn btn-success">@ticket.StatusOfTicket</button>
+                                    break;
+                            }
+                        
+                    </td>
                 </tr>
                 idx++;
             }
@@ -49,10 +67,15 @@ else
     </div>
 }
 
+<link rel="stylesheet" type="text/css" href="/Content/datatables.min.css" />
 
 
 
+@section scripts
+{
+<script type="text/javascript" src="/Scripts/datatables.min.js"></script>
     <script>
+        
         $(document).ready(function () {
             $('#example').DataTable();
         });
