@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace TicketSystem
 {
@@ -25,6 +24,11 @@ namespace TicketSystem
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //plugin do zaawansowanej tabeli
+            bundles.Add(new StyleBundle("~/bundles/datatables").Include(
+                "~/Content/datatables.min.css",
+                "~/Scripts/datatables.min.js"));
         }
     }
 }

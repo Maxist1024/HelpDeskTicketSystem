@@ -5,26 +5,26 @@
 <div class="jumbotron">
     <h1>TicketORP</h1>
     <p class="lead">Pomoc techniczna</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Wyślij zgłoszenie &raquo;</a></p>
+    <p><a href="@Url.Action("Add","Ticket")" class="btn btn-primary btn-lg">Wyślij zgłoszenie &raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Stwórz konto</h2>
         <p>Witamy w Systemie Support firmy TicketPRO. Aby korzystać z naszego systemu supportowego potrzebujesz stworzyć swoje konto.</p>
-        @*Trzeba podpiąć  link do rejestracji. Do usuniecią*@
+
         <p><a class="btn btn-default" href="@Url.Action("Register","Account")">Więcej &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Historia zgłoszeń</h2>
         <p>W dowolnej chwili możesz przeglądać swoje stare zgłoszenia jak i sprawdzić czy dostałeś rozwiąznanie swojego ostatniego problemu</p>
-        @*Trzeba podpiąć  link do moje zgloszenia. Do usuniecią*@
+
         <p><a class="btn btn-default" href="@Url.Action("Details","Ticket")">Więcej &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Pomoc</h2>
         <p>Jeżeli nie potrafisz wysłać zgłoszenia. Zaproszamy do bezpośredniego kontaku z naszym supportem przez Email </p>
-        @*Trzeba podpiąć  link do kontaku. Do usuniecią*@
+
         <p><a class="btn btn-default" href="@Url.Action("Contact","Home")">Więcej &raquo;</a></p>
     </div>
 </div>
