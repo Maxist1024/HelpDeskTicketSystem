@@ -8,36 +8,32 @@
 @using (@Html.BeginForm("Add", "Ticket", FormMethod.Post, new { @class = "ticket-form" }))
 {
 
-    //@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
+
+    if (Model.IsSuccess)
+    {
+        <div class="alert alert-success">
+            <p>Formularz zgłoszeniowy został wysłany poprawnie. Kliknij w @Html.ActionLink("Moje zgłoszenia","Details", "Ticket") aby zobaczyć szczegóły.</p>
+        </div>
+    }
+
     <div class="form-group">
-        @Html.Label("Tytuł")
+        @Html.LabelFor(m => m.Title)
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(m => m.Title)
     </div>
 
     <div class="form-group">
-        @Html.Label("Rodzaj zgłoszenia")
-        @Html.EnumDropDownListFor(m => m.TypeOfTicket, new { @class = "form-control" })
-        @*@Html.ValidationMessageFor(m => m.TypeOfTicket)*@
+        @Html.LabelFor(m => m.TypeOfTicket)
+        @Html.EnumDropDownListFor(m => m.TypeOfTicket ,new { @class = "form-control" })
+        
     </div>
 
-    @*<div class="form-group">
-        <!-- moja poropozycja aby dodac takie pole w bazie danych -->
-        @Html.Label("Grupa helpdesku")
-        
-        <!--na sztywno dla demonstracji-->
-        @Html.DropDownList("FooBarDropDown", new List<SelectListItem>
-        {
-            new SelectListItem{ Text="Telefuny", Value = "1" },
-            new SelectListItem{ Text="Drukarki", Value = "2" },
-            new SelectListItem{ Text="Hardware", Value = "3" },
-            new SelectListItem{ Text="Software", Value = "3" },
-        }, new { @class="form-control"} ) 
-       
-    </div>*@
+
+
 
     <div class="form-group">
-        @Html.Label("Opis problemu")
+        @Html.LabelFor(m => m.Description)
         @Html.TextAreaFor(m => m.Description, new { @class = "form-control", style = "height:200px" })
         @Html.ValidationMessageFor(m => m.Description)
     </div>

@@ -34,8 +34,21 @@ textarea {
 
 .form-control {
     max-width: 500px;
+    box-shadow: none;
 }
 
-/*.ticket-form {
-    width: 500px;
+.form-control:focus {
+    max-width: 500px;
+    box-shadow: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff2222;
+}
+
+.field-validation-error {
+    color: #ff2222
+}
+/*.validation-summary-errors ul li {
+    color: #ff2222
 }*/

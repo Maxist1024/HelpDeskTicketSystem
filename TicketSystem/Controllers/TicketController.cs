@@ -24,9 +24,15 @@ namespace TicketSystem.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            return View();
+            var ticketVM = new TicketViewModel
+            {
+                IsSuccess = false,
+                //Message = "Wypełnij poniższy formularz aby dodać zgłoszenie."
+            };
+            return View(ticketVM);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
         public ActionResult Add(TicketViewModel ticketForm)
@@ -48,7 +54,9 @@ namespace TicketSystem.Controllers
 
             _context.Tickets.Add(ticketToDb);
             _context.SaveChanges();
-            return View();
+
+
+            return View(new TicketViewModel(true));
         }
 
         [Authorize]
