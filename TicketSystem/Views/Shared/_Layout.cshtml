@@ -25,6 +25,19 @@
                     <li>@Html.ActionLink("Wyślij zgłoszenie", "Add", "Ticket")</li>
                     <li>@Html.ActionLink("Moje zgłoszenia", "Details", "Ticket")</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Zarządzaj
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Zarządzaj użytkownikami", "ManageUser", "AdminManage")</li>
+                                <li>@Html.ActionLink("Zarządzaj ticketami", "ManageTickets", "AdminManage")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

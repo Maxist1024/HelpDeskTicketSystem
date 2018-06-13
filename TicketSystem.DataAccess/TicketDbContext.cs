@@ -9,7 +9,7 @@ namespace TicketSystem.DataAccess
     {
         public TicketDbContext() : base("TicketSystemDatabase")
         {
-
+            Database.SetInitializer<TicketDbContext>(new TicketDbInitializer());
         }
 
         public DbSet<Ticket> Tickets { get; set; }

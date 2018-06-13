@@ -48,7 +48,7 @@ namespace TicketSystem
                 role.Name = "Helper";
                 roleManager.Create(role);
 
-                var collection = context.Users.Where(u => u.UserName != "admin").ToList();
+                var collection = context.Users.Where(u => u.UserName != "admin@gmail.com").ToList();
                 foreach (var item in collection)
                 {
                     UserManager.AddToRole(item.Id, "Helper");
