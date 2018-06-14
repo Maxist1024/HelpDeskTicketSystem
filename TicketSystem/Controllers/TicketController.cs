@@ -55,7 +55,7 @@ namespace TicketSystem.Controllers
             _context.Tickets.Add(ticketToDb);
             _context.SaveChanges();
 
-
+            ModelState.Clear();
             return View(new TicketViewModel(true));
         }
 
