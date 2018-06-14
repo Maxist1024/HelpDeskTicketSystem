@@ -274,6 +274,8 @@
     <Content Include="Views\Ticket\Add.cshtml" />
     <Content Include="Views\Ticket\Details.cshtml" />
     <Content Include="Views\AdminManage\ManageUser.cshtml" />
+    <Content Include="Views\AdminManage\EditUser.cshtml" />
+    <Content Include="Views\AdminManage\DeleteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
