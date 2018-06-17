@@ -276,6 +276,8 @@
     <Content Include="Views\AdminManage\ManageUser.cshtml" />
     <Content Include="Views\AdminManage\EditUser.cshtml" />
     <Content Include="Views\AdminManage\DeleteUser.cshtml" />
+    <Content Include="Views\Shared\ManageTicket.cshtml" />
+    <Content Include="Views\Shared\_TicketDetailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

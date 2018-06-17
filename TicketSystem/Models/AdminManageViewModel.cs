@@ -23,6 +23,20 @@ namespace TicketSystem.Models
         public string Role { get; set; }
     }
 
+    public class ManageTicketViewModel
+    {
+        public string Id { get; set; }
+
+        [Display(Name = "Tytuł")]
+        public string Title { get; set; }
+
+        [Display(Name = "Typ zgłoszenia")]
+        public TypesOfTicket TypeOfTicket { get; set; }
+
+        [Display(Name = "Osoba zgłaszająca")]
+        public string UserName { get; set; }
+    }
+
     public class EditUserViewModel
     {
         [Required]

@@ -51,8 +51,9 @@ namespace TicketSystem.Controllers
                 _userManager = value;
             }
         }
-        #endregion 
+        #endregion
 
+        #region UserArea
         public ActionResult ManageUser()
         {
             List<ManageUserViewModel> users = new List<ManageUserViewModel>();
@@ -158,6 +159,23 @@ namespace TicketSystem.Controllers
             {
                 return View();
             }
+        }
+        #endregion
+
+        public ActionResult ManageTicket()
+        {
+            List<ManageTicketViewModel> tickets = new List<ManageTicketViewModel>();
+            using (TicketDbContext context = TicketDbContext.Create())
+            {
+                tickets = context.Tickets.Select(x
+                   => new ManageTicketViewModel()
+                   {
+                       Title = x.Title,
+                       TypeOfTicket = x.TypeOfTicket,
+                       UserName = x.User.UserName
+                   }).ToList();
+            }
+            return View(tickets);
         }
     }
 }
