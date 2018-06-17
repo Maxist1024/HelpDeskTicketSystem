@@ -1,5 +1,9 @@
 ﻿@model List<TicketSystem.Model.Ticket>
 
-<h2>Moje zgłoszenia</h2>
+@{
+    ViewBag.Title = "DetailTicket";
+}
+
+<h2>Szczegóły zlecenia</h2>
 
 @Html.Partial("_TicketDetailPartial", Model)

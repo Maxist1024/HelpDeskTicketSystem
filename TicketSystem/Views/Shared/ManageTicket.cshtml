@@ -32,9 +32,9 @@
             @Html.DisplayFor(modelItem => item.TypeOfTicket)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditTicket", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "DetailsTicket", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "DeleteTicket", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "EditTicket", new {  id=item.Id }) |
+            @Html.ActionLink("Details", "DetailsTicket", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteTicket", new { id = item.Id })
         </td>
     </tr>
 }

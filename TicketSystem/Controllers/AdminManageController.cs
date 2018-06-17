@@ -7,11 +7,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TicketSystem.DataAccess;
+using TicketSystem.Model;
 using TicketSystem.Models;
 
 namespace TicketSystem.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminManageController : Controller
     {
         #region Ctr
@@ -72,7 +73,7 @@ namespace TicketSystem.Controllers
                              select role.Name).ToList()
                 }).ToList().Select(p => new ManageUserViewModel()
                 {
-                    Id= p.Id,
+                    Id = p.Id,
                     Email = p.Email,
                     TypeOfTicket = p.TypeOfTicket,
                     Role = string.Join(",", p.Roles)
@@ -137,7 +138,7 @@ namespace TicketSystem.Controllers
         public ActionResult DeleteUser(string id)
         {
             var user = UserManager.FindById(id);
-            if(null == user)
+            if (null == user)
             {
                 return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
             }
@@ -172,10 +173,24 @@ namespace TicketSystem.Controllers
                    {
                        Title = x.Title,
                        TypeOfTicket = x.TypeOfTicket,
-                       UserName = x.User.UserName
+                       UserName = x.User.UserName,
+                       Id = x.TicketId
                    }).ToList();
             }
             return View(tickets);
+        }
+
+        public ActionResult DetailsTicket(int id)
+        {
+            List<Ticket> ticket = new List<Ticket>();
+            using (var context = TicketDbContext.Create())
+            {
+                ticket = context.Tickets.Where(x => x.TicketId == id).ToList();
+            }
+            if (null == ticket)
+                return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
+
+            return View(ticket);
         }
     }
 }

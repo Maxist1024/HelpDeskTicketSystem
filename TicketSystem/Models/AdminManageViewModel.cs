@@ -25,7 +25,7 @@ namespace TicketSystem.Models
 
     public class ManageTicketViewModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Tytuł")]
         public string Title { get; set; }
