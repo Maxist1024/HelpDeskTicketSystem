@@ -1,17 +1,41 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@model TicketSystem.Models.ContactMailViewModel
+@{
+    ViewBag.Title = "Kontakt";
+    
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>Formularz kontatkowy z administratorem strony</h2>
+@*<h3>@ViewBag.Message</h3>*@
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="contact-form" @*style="width: 50%; float: left; "*@>
+    @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+    {
+        //@Html.ValidationSummary()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Message)
+            @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @style = "height: 200px;" })
+        </div>
+
+        <div class="button-wrapper">
+            <input type="submit" value="Wyślij" class="btn btn-primary"> <input type="reset" value="Reset" class="btn btn-secondary">
+        </div>
+    }
+</div>
+
+@*<div id="" style="width: 49%; float: left">
+    <ul>
+        <li>bledy na www</li>
+        <li>propozyjce zmian</li>
+        <li>anonimowa skarga na helpera</li>
+
+    </ul>
+</div>*@
