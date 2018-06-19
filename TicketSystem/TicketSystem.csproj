@@ -279,6 +279,9 @@
     <Content Include="Views\Shared\ManageTicket.cshtml" />
     <Content Include="Views\Shared\_TicketDetailPartial.cshtml" />
     <Content Include="Views\AdminManage\DetailsTicket.cshtml" />
+    <Content Include="Views\AdminManage\EditUserAdvande.cshtml" />
+    <Content Include="Views\AdminManage\EditTicket.cshtml" />
+    <Content Include="Views\AdminManage\DeleteTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

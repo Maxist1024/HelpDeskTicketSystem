@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,10 +10,10 @@ using TicketSystem.Models;
 
 namespace TicketSystem.Controllers
 {
-    [Authorize(Roles = "Admin")]
+
     public class AdminManageController : Controller
     {
-        #region Ctr
+        #region Ctor
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -55,6 +53,7 @@ namespace TicketSystem.Controllers
         #endregion
 
         #region UserArea
+        [Authorize(Roles = "Admin")]
         public ActionResult ManageUser()
         {
             List<ManageUserViewModel> users = new List<ManageUserViewModel>();
@@ -79,10 +78,17 @@ namespace TicketSystem.Controllers
                     Role = string.Join(",", p.Roles)
                 }).ToList();
             }
-            return View(users.Where(x => x.Role != "Admin").ToList());
+            users = users.Where(x => x.Role != "Admin").ToList();
+            foreach (var user in users)
+            {
+                if (user.Role == "User")
+                    user.TypeOfTicket = null;
+            }
+            return View(users);
         }
 
         // GET: AdminManage/EditUser/
+        [Authorize(Roles = "Admin")]
         public ActionResult EditUser(string id)
         {
             List<SelectListItem> items = new List<SelectListItem>();
@@ -91,16 +97,54 @@ namespace TicketSystem.Controllers
 
             items.Add(new SelectListItem { Text = "User", Value = "1", Selected = true });
 
+            items.Add(new SelectListItem { Text = "Admin", Value = "2" });
+
             ViewBag.Roles = items;
 
             var user = UserManager.FindById(id);
 
-            EditUserViewModel editUser = new EditUserViewModel() { Email = user.Email };
+            EditUserViewModel editUser = new EditUserViewModel();
 
+            using (var context = TicketDbContext.Create())
+            {
+                editUser = new EditUserViewModel()
+                {
+                    Email = user.Email,
+                };
+            }
+            return View(editUser);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditUserAdvande(string id)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "Helper", Value = "0", Selected = true });
+
+            items.Add(new SelectListItem { Text = "User", Value = "1" });
+
+            items.Add(new SelectListItem { Text = "Admin", Value = "2" });
+
+            ViewBag.Roles = items;
+
+            var user = UserManager.FindById(id);
+
+            EditUserViewModel editUser = new EditUserViewModel();
+
+            using (var context = TicketDbContext.Create())
+            {
+                editUser = new EditUserViewModel()
+                {
+                    Email = user.Email,
+                    TypeOfTicket = user.TypeOfTicket
+                };
+            }
             return View(editUser);
         }
 
         // POST: AdminManage/EditUser/
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult EditUser(string id, EditUserViewModel collection, string Roles)
         {
@@ -109,20 +153,25 @@ namespace TicketSystem.Controllers
                 using (TicketDbContext context = TicketDbContext.Create())
                 {
                     var user = UserManager.FindById(id);
-                    IdentityRole identityRole = new IdentityRole();
+
                     if (Roles == "0")
                     {
-                        identityRole = context.Roles.First(r => r.Name == "Helper");
-                        UserManager.RemoveFromRole(user.Id, "User");
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
                         UserManager.AddToRole(user.Id, "Helper");
+                    }
+                    else if (Roles == "1")
+                    {
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
+                        UserManager.AddToRole(user.Id, "User");
                     }
                     else
                     {
-                        identityRole = context.Roles.First(r => r.Name == "User");
-                        UserManager.RemoveFromRole(user.Id, "Helper");
-                        UserManager.AddToRole(user.Id, "User");
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
+                        UserManager.AddToRole(user.Id, "Admin");
                     }
-                    user.TypeOfTicket = collection.TypeOfTicket;
                     context.SaveChanges();
                 }
                 return RedirectToAction("ManageUser");
@@ -133,8 +182,48 @@ namespace TicketSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult EditUserAdvande(string id, EditUserViewModel collection, string Roles)
+        {
+            try
+            {
+                using (TicketDbContext context = TicketDbContext.Create())
+                {
+                    var user = context.Users.FirstOrDefault(x => x.Id == id);
 
-        // GET: AdminManage/Delete/5
+                    if (Roles == "0")
+                    {
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
+                        UserManager.AddToRole(user.Id, "Helper");
+                    }
+                    else if (Roles == "1")
+                    {
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
+                        UserManager.AddToRole(user.Id, "User");
+                    }
+                    else
+                    {
+                        var collec = UserManager.GetRoles(user.Id);
+                        RemoveRolesFromUser(user, collec);
+                        UserManager.AddToRole(user.Id, "Admin");
+                    }
+                    user.TypeOfTicket = collection.TypeOfTicket;
+
+                    context.SaveChanges();
+                }
+                return RedirectToAction("ManageUser");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: AdminManage/Delete/
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteUser(string id)
         {
             var user = UserManager.FindById(id);
@@ -146,7 +235,8 @@ namespace TicketSystem.Controllers
             return View(model);
         }
 
-        // POST: AdminManage/Delete/5
+        // POST: AdminManage/Delete/
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult DeleteUser(string id, FormCollection collection)
         {
@@ -163,6 +253,8 @@ namespace TicketSystem.Controllers
         }
         #endregion
 
+        #region TicketArea
+        [Authorize(Roles = "Helper, Admin")]
         public ActionResult ManageTicket()
         {
             List<ManageTicketViewModel> tickets = new List<ManageTicketViewModel>();
@@ -180,6 +272,7 @@ namespace TicketSystem.Controllers
             return View(tickets);
         }
 
+        [Authorize(Roles = "Helper, Admin")]
         public ActionResult DetailsTicket(int id)
         {
             List<Ticket> ticket = new List<Ticket>();
@@ -192,5 +285,117 @@ namespace TicketSystem.Controllers
 
             return View(ticket);
         }
+
+        [Authorize(Roles = "Helper, Admin")]
+        public ActionResult EditTicket(int id)
+        {
+            EditTicketViewModel ticketToEdit = new EditTicketViewModel();
+            using (var context = TicketDbContext.Create())
+            {
+                ticketToEdit = context.Tickets.Where(x => x.TicketId == id)
+                    .Select(x => new EditTicketViewModel()
+                    {
+                        Id = x.TicketId,
+                        StatusOfTicket = x.StatusOfTicket,
+                        Title = x.Title,
+                        TypeOfTicket = x.TypeOfTicket,
+                        UserName = x.User.UserName
+                    }).FirstOrDefault();
+            }
+            if (null == ticketToEdit)
+                return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
+
+            return View(ticketToEdit);
+        }
+
+        [Authorize(Roles = "Helper, Admin")]
+        [HttpPost]
+        public ActionResult EditTicket(int id, EditTicketViewModel collection)
+        {
+            try
+            {
+                using (var context = TicketDbContext.Create())
+                {
+                    Ticket ticket = new Ticket();
+                    ticket = context.Tickets.FirstOrDefault(x => x.TicketId == id);
+
+                    if (null == ticket)
+                        return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
+
+                    ticket.TypeOfTicket = collection.TypeOfTicket;
+                    ticket.StatusOfTicket = collection.StatusOfTicket;
+
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ManageTicket");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [Authorize(Roles = "Helper, Admin")]
+        public ActionResult DeleteTicket(int id)
+        {
+            DeleteTicketViewModel deleteTicket = new DeleteTicketViewModel();
+
+            using (var context = TicketDbContext.Create())
+            {
+                deleteTicket = context.Tickets.Where(x => x.TicketId == id)
+                    .Select(x => new DeleteTicketViewModel()
+                    {
+                        Id = x.TicketId,
+                        StatusOfTicket = x.StatusOfTicket,
+                        Title = x.Title,
+                        TypeOfTicket = x.TypeOfTicket,
+                        UserName = x.User.UserName,
+                        Description = x.Description
+                    }).FirstOrDefault();
+            }
+            if (null == deleteTicket)
+                return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
+
+            return View(deleteTicket);
+        }
+
+        [Authorize(Roles = "Admin, Helper")]
+        [HttpPost]
+        public ActionResult DeleteTicket(int id, FormCollection collection)
+        {
+            try
+            {
+                Ticket deleteTicket = new Ticket();
+
+                using (var context = TicketDbContext.Create())
+                {
+                    deleteTicket = context.Tickets.FirstOrDefault(x => x.TicketId == id);
+
+                    if (null == deleteTicket)
+                        return new HttpNotFoundResult("Specjalnie tu trafiłeś?");
+
+                    context.Tickets.Remove(deleteTicket);
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ManageTicket");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region tools
+        private void RemoveRolesFromUser(User user, IList<string> collec)
+        {
+            foreach (var item in collec)
+            {
+                UserManager.RemoveFromRole(user.Id, item);
+            }
+        }
+        #endregion
     }
 }

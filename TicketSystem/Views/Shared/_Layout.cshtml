@@ -38,6 +38,10 @@
                             </ul>
                         </li>
                     }
+                    else
+                    {
+                        <li>@Html.ActionLink("Zarządzaj ticketami", "ManageTicket", "AdminManage")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

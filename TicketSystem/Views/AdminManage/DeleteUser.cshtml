@@ -1,11 +1,8 @@
 ﻿@model TicketSystem.Models.ManageUserViewModel
-
 @{
     ViewBag.Title = "DeleteUser";
 }
-
 <h2>Usuwanie użytkownika</h2>
-
 <h3>Jesteś pewien, że chcesz usunąc tego użytkownika?</h3>
 <div>
     <hr />
@@ -13,27 +10,23 @@
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.TypeOfTicket)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.TypeOfTicket)
         </dd>
-
     </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "ManageUser")
+            @Html.ActionLink("Wróc do listy", "ManageUser")
         </div>
     }
 </div>

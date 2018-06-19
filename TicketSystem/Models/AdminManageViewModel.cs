@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using TicketSystem.Model;
 
 namespace TicketSystem.Models
 {
     public class ManageUserViewModel
-    {      
+    {
         public string Id { get; set; }
 
         [Required]
@@ -16,7 +15,7 @@ namespace TicketSystem.Models
         [Required]
         [Display(Name = "Preferowany typ ticketu")]
         [EnumDataType(typeof(TypesOfTicket))]
-        public TypesOfTicket TypeOfTicket { get; set; }
+        public TypesOfTicket? TypeOfTicket { get; set; }
 
         [Required]
         [Display(Name = "Typ użytkownika")]
@@ -37,6 +36,43 @@ namespace TicketSystem.Models
         public string UserName { get; set; }
     }
 
+    public class EditTicketViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Tytuł")]
+        public string Title { get; set; }
+
+        [Display(Name = "Typ zgłoszenia")]
+        public TypesOfTicket TypeOfTicket { get; set; }
+
+        [Display(Name = "Osoba zgłaszająca")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Stan zgłoszenia")]
+        public StatusesOfTicket StatusOfTicket { get; set; }
+    }
+
+    public class DeleteTicketViewModel
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Tytuł")]
+        public string Title { get; set; }
+
+        [Display(Name = "Opis zgłoszenia")]
+        public string Description { get; set; }
+
+        [Display(Name = "Typ zgłoszenia")]
+        public TypesOfTicket TypeOfTicket { get; set; }
+
+        [Display(Name = "Osoba zgłaszająca")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Stan zgłoszenia")]
+        public StatusesOfTicket StatusOfTicket { get; set; }
+    }
+
     public class EditUserViewModel
     {
         [Required]
@@ -46,7 +82,7 @@ namespace TicketSystem.Models
 
         [Required]
         [Display(Name = "Typ użytkownika")]
-        public string Role { get; set; }
+        public string UserRole { get; set; }
 
 
         [Display(Name = "Rodzaj zgłoszenia")]

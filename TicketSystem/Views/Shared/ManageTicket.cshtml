@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<TicketSystem.Models.ManageTicketViewModel>
-
 @{
     ViewBag.Title = "ManageTicket";
 }
-
 <h2>Zarządzaj zgłoszeniami</h2>
-
 <table class="table">
     <tr>
         <th>
@@ -19,24 +16,23 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfTicket)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditTicket", new {  id=item.Id }) |
-            @Html.ActionLink("Details", "DetailsTicket", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "DeleteTicket", new { id = item.Id })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfTicket)
+            </td>
+            <td>
+                @Html.ActionLink("Edytuj", "EditTicket", new { id = item.Id }) |
+                @Html.ActionLink("Szczegóły", "DetailsTicket", new { id = item.Id }) |
+                @Html.ActionLink("Usuń", "DeleteTicket", new { id = item.Id })
+            </td>
+        </tr>
+    }
 </table>
