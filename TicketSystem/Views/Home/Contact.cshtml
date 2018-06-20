@@ -1,15 +1,30 @@
-﻿@model TicketSystem.Models.ContactMailViewModel
+﻿@using TicketSystem.Models
+@model TicketSystem.Models.ContactMailViewModel
 @{
     ViewBag.Title = "Kontakt";
     
 }
-<h2>Formularz kontatkowy z administratorem strony</h2>
+<h2>Formularz kontaktowy z administratorem strony</h2>
 @*<h3>@ViewBag.Message</h3>*@
 
-<div class="contact-form" @*style="width: 50%; float: left; "*@>
+<div>
     @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
     {
-        //@Html.ValidationSummary()
+
+        if (Model.IsSuccess && Model.Response.Length > 1)
+        {
+            <div class="alert alert-success">
+                <p>@Model.Response</p>
+            </div>
+        }
+        if (!Model.IsSuccess && Model.Response.Length > 1)
+        {
+            <div class="alert alert-danger">
+                <p>@Model.Response</p>
+            </div>
+        }
+
+        @Html.ValidationSummary()
         <div class="form-group">
             @Html.LabelFor(m => m.Name)
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -31,11 +46,3 @@
     }
 </div>
 
-@*<div id="" style="width: 49%; float: left">
-    <ul>
-        <li>bledy na www</li>
-        <li>propozyjce zmian</li>
-        <li>anonimowa skarga na helpera</li>
-
-    </ul>
-</div>*@
