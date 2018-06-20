@@ -1,17 +1,48 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@using TicketSystem.Models
+@model TicketSystem.Models.ContactMailViewModel
+@{
+    ViewBag.Title = "Kontakt";
+    
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>Formularz kontaktowy z administratorem strony</h2>
+@*<h3>@ViewBag.Message</h3>*@
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div>
+    @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+    {
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        if (Model.IsSuccess && Model.Response.Length > 1)
+        {
+            <div class="alert alert-success">
+                <p>@Model.Response</p>
+            </div>
+        }
+        if (!Model.IsSuccess && Model.Response.Length > 1)
+        {
+            <div class="alert alert-danger">
+                <p>@Model.Response</p>
+            </div>
+        }
+
+        @Html.ValidationSummary()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Message)
+            @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @style = "height: 200px;" })
+        </div>
+
+        <div class="button-wrapper">
+            <input type="submit" value="Wyślij" class="btn btn-primary"> <input type="reset" value="Reset" class="btn btn-secondary">
+        </div>
+    }
+</div>
+
