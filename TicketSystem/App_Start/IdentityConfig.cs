@@ -33,7 +33,7 @@ namespace TicketSystem
             mail.Subject = message.Subject;//temat wiadomości
             mail.Body = message.Body; //treść wiadomości
 
-            smtpClient.Credentials = new System.Net.NetworkCredential("dlaisk@o2.pl", "dlaisk123");//nazwa nadawcy i hasło
+            smtpClient.Credentials = new System.Net.NetworkCredential("dlaisk@o2.pl", "emailisk123");//nazwa nadawcy i hasło
 
             try
             {

@@ -38,7 +38,7 @@
                             </ul>
                         </li>
                     }
-                    else
+                    else if(User.IsInRole("Helper"))
                     {
                         <li>@Html.ActionLink("Zarządzaj ticketami", "ManageTicket", "AdminManage")</li>
                     }
