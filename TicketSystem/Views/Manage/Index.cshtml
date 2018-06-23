@@ -3,7 +3,7 @@
     ViewBag.Title = "Zarządzaj";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -12,6 +12,7 @@
     <dl class="dl-horizontal">
         <dt>Hasło:</dt>
         <dd>
+            <P>Jeśli chcesz zmienić hasło do konta, wystarczy nacisnąć na "Zmień hasło" poniżej.</P>
             [
             @if (Model.HasPassword)
             {
@@ -23,11 +24,11 @@
             }
             ]
         </dd>
-        <dt>Logowania zewnętrzne:</dt>
+        @*<dt>Logowania zewnętrzne:</dt>
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Zarządzaj", "ManageLogins") ]
-        </dd>
+        </dd>*@
         @*
             Numery telefonów mogą być używane jako drugi składnik w systemie uwierzytelniania dwuskładnikowego.
              
@@ -56,12 +57,12 @@
                 }
             </dd>
         *@
-        <dt>Uwierzytelnianie dwuetapowe:</dt>
+        @*<dt>Uwierzytelnianie dwuetapowe:</dt>
         <dd>
             <p>
                 Nie skonfigurowano dostawców uwierzytelniania dwuskładnikowego. Zapoznaj się z <a href="https://go.microsoft.com/fwlink/?LinkId=403804">tym artykułem</a>,
                 aby uzyskać szczegółowe informacje dotyczące konfigurowania tej aplikacji ASP.NET do obsługi uwierzytelniania dwuskładnikowego.
-            </p>
+            </p>*@
             @*@if (Model.TwoFactor)
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
