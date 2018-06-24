@@ -8,23 +8,46 @@
     <p><a href="@Url.Action("Add","Ticket")" class="btn btn-primary btn-lg">Wyślij zgłoszenie &raquo;</a></p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Stwórz konto</h2>
-        <p>Witamy w Systemie Support firmy TicketPRO. Aby korzystać z naszego systemu supportowego potrzebujesz stworzyć swoje konto.</p>
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-4">
 
-        <p><a class="btn btn-default" href="@Url.Action("Register","Account")">Więcej &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Historia zgłoszeń</h2>
-        <p>W dowolnej chwili możesz przeglądać swoje stare zgłoszenia jak i sprawdzić czy dostałeś rozwiąznanie swojego ostatniego problemu</p>
+            <h2>Stwórz konto</h2>
+            <p>Witamy w Systemie Support firmy TicketPRO. Aby korzystać z naszego systemu supportowego potrzebujesz stworzyć swoje konto.</p>
 
-        <p><a class="btn btn-default" href="@Url.Action("Details","Ticket")">Więcej &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Pomoc</h2>
-        <p>Jeżeli nie potrafisz wysłać zgłoszenia. Zaproszamy do bezpośredniego kontaku z naszym supportem przez Email </p>
+            <p><a class="btn btn-default" href="@Url.Action("Register", "Account")">Więcej &raquo;</a></p>
+            
 
-        <p><a class="btn btn-default" href="@Url.Action("Contact","Home")">Więcej &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Historia zgłoszeń</h2>
+            <p>W dowolnej chwili możesz przeglądać swoje stare zgłoszenia jak i sprawdzić czy dostałeś rozwiąznanie swojego ostatniego problemu</p>
+
+            <p><a class="btn btn-default" href="@Url.Action("Details","Ticket")">Więcej &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Pomoc</h2>
+            <p>Jeżeli nie potrafisz wysłać zgłoszenia. Zaproszamy do bezpośredniego kontaku z naszym supportem przez Email </p>
+
+            <p><a class="btn btn-default" href="@Url.Action("Contact","Home")">Więcej &raquo;</a></p>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Historia zgłoszeń</h2>
+            <p>W dowolnej chwili możesz przeglądać swoje stare zgłoszenia jak i sprawdzić czy dostałeś rozwiąznanie swojego ostatniego problemu</p>
+
+            <p><a class="btn btn-default" href="@Url.Action("Details","Ticket")">Więcej &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Pomoc</h2>
+            <p>Jeżeli nie potrafisz wysłać zgłoszenia. Zaproszamy do bezpośredniego kontaku z naszym supportem przez Email </p>
+
+            <p><a class="btn btn-default" href="@Url.Action("Contact","Home")">Więcej &raquo;</a></p>
+        </div>
+    </div>
+}

@@ -11,7 +11,7 @@ namespace TicketSystem.Models
         public string Name { get; set; }
 
         [EmailAddress]
-        [Required]
+        [StringLength(200, MinimumLength =1 )]
         public string Email { get; set; }
 
         [Required]
